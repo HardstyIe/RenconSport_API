@@ -1,4 +1,4 @@
-import { IsDate, IsString, Length } from 'class-validator';
+import { IsString, Length } from 'class-validator';
 
 export class RegisterUsersDto {
   @IsString()
@@ -17,6 +17,6 @@ export class RegisterUsersDto {
   @Length(5, 100)
   lastName: string;
 
-  @IsDate()
-  birthday: Date;
+  @IsString()
+  birthday: string;
 }
