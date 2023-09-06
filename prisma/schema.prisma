@@ -13,7 +13,7 @@ model User {
   firstName        String            @db.VarChar(50)
   lastName         String            @db.VarChar(50)
   password         String            @db.VarChar(100)
-  birthday         DateTime?         @db.Date
+  birthday         DateTime         @db.Date
   location         String?           @db.VarChar(250)
   phone            String?           @db.VarChar(50)
   ChatMessages     ChatMessage[]

@@ -13,19 +13,11 @@ export class UsersController {
     @Req() request: Request,
     @Res() response: Response,
   ): Promise<any> {
-    try {
-      const result = await this.usersService.getAllUsers();
-      return response.status(200).json({
-        status: `Ok!`,
-        message: `Successfully fetch data!`,
-        result: result,
-      });
-    } catch (err) {
-      return response.status(500).json({
-        status: `Error!`,
-        message: `Internal Server Error`,
-        result: err,
-      });
-    }
+    const result = await this.usersService.getAllUsers();
+    return response.status(200).json({
+      status: `Ok!`,
+      message: `Successfully fetch data!`,
+      result: result,
+    });
   }
 }

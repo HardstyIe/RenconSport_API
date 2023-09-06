@@ -6,7 +6,7 @@ export class User implements Prisma.UserCreateInput {
   firstName: string;
   lastName: string;
   password: string;
-  birthday?: string | Date;
+  birthday: Date;
   location?: string;
   phone?: string;
   ChatMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput;

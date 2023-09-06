@@ -43,6 +43,7 @@ export class AuthService {
     createUsers.email = createDTO.email;
     createUsers.firstName = createDTO.firstName;
     createUsers.lastName = createDTO.lastName;
+    createUsers.birthday = createDTO.birthday;
     createUsers.password = await bcrypt.hash(createDTO.password, 10);
 
     const user = await this.usersServices.createUser(createUsers);

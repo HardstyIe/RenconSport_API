@@ -35,19 +35,11 @@ export class AuthController {
     @Res() response: Response,
     @Body() registerDto: RegisterUsersDto,
   ): Promise<any> {
-    try {
-      const result = await this.authService.register(registerDto);
-      return response.status(200).json({
-        status: 'Ok!',
-        message: 'Successfully register user!',
-        result: result,
-      });
-    } catch (err) {
-      console.log(err);
-      return response.status(500).json({
-        status: 'Error!',
-        message: 'Internal Server Error!',
-      });
-    }
+    const result = await this.authService.register(registerDto);
+    return response.status(200).json({
+      status: 'Ok!',
+      message: 'Successfully register user!',
+      result: result,
+    });
   }
 }
