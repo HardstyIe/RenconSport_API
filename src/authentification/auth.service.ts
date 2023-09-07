@@ -43,9 +43,11 @@ export class AuthService {
     createUsers.email = createDTO.email;
     createUsers.firstName = createDTO.firstName;
     createUsers.lastName = createDTO.lastName;
-    const [day, month, year] = createDTO.birthday.split('-');
-    const convertedDate = new Date(+day, +month - 1, +year);
+
+    // Convertir le timestamp en objet Date
+    const convertedDate = new Date(createDTO.birthday * 1000);
     createUsers.birthday = convertedDate;
+
     createUsers.password = await bcrypt.hash(createDTO.password, 10);
 
     const user = await this.usersServices.createUser(createUsers);

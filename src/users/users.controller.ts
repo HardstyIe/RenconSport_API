@@ -9,12 +9,14 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { JwtAuthGuard } from 'src/authentification/auth.guard';
 import { CreateUsersDto } from './dto/create-users.dto'; // À créer
 import { UpdateUsersDto } from './dto/update-users.dto'; // À créer
 import { UsersServices } from './users.service';
 
+@ApiTags('Utilisateurs')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersServices) {}
