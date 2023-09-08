@@ -15,12 +15,12 @@ export class RegisterUsersDto {
   @ApiProperty({ description: "Prénom de l'utilisateur" })
   @IsString()
   @Length(5, 100)
-  firstName: string;
+  first_name: string;
 
   @ApiProperty({ description: "Nom de famille de l'utilisateur" })
   @IsString()
   @Length(5, 100)
-  lastName: string;
+  last_name: string;
 
   @ApiProperty({ description: "Anniversaire de l'utilisateur en timestamp" })
   @IsNumber()

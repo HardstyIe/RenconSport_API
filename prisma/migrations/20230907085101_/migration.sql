@@ -2,9 +2,10 @@
 CREATE TABLE "User" (
     "id" UUID NOT NULL,
     "email" VARCHAR(100) NOT NULL,
-    "firstName" VARCHAR(50) NOT NULL,
-    "lastName" VARCHAR(50) NOT NULL,
+    "first_name" VARCHAR(50) NOT NULL,
+    "last_name" VARCHAR(50) NOT NULL,
     "password" VARCHAR(100) NOT NULL,
+    "is_admin" BOOLEAN NOT NULL DEFAULT false,
     "birthday" DATE NOT NULL,
     "location" VARCHAR(250),
     "phone" VARCHAR(50),
@@ -17,7 +18,7 @@ CREATE TABLE "Exercice" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(100) NOT NULL,
     "difficulty" VARCHAR(30) NOT NULL,
-    "isLiked" BOOLEAN NOT NULL DEFAULT false,
+    "is_liked" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "Exercice_pkey" PRIMARY KEY ("id")
 );

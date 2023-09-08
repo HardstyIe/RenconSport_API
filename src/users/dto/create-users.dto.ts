@@ -1,6 +1,8 @@
 import { IsDate, IsEmail, IsString, Length } from 'class-validator';
 
 export class CreateUsersDto {
+  @IsString()
+  @Length(5, 100)
   @IsEmail()
   email: string;
 
@@ -10,11 +12,11 @@ export class CreateUsersDto {
 
   @IsString()
   @Length(1, 50)
-  firstName: string;
+  first_name: string;
 
   @IsString()
   @Length(1, 50)
-  lastName: string;
+  last_name: string;
 
   @IsDate()
   birthday: Date;

@@ -41,8 +41,8 @@ export class AuthService {
   async register(createDTO: RegisterUsersDto): Promise<any> {
     const createUsers = new User();
     createUsers.email = createDTO.email;
-    createUsers.firstName = createDTO.firstName;
-    createUsers.lastName = createDTO.lastName;
+    createUsers.first_name = createDTO.first_name;
+    createUsers.last_name = createDTO.last_name;
 
     // Convertir le timestamp en objet Date
     const convertedDate = new Date(createDTO.birthday * 1000);

@@ -10,18 +10,19 @@ datasource db {
 model User {
   id               String            @id @default(uuid()) @db.Uuid
   email            String            @unique @db.VarChar(100)
-  firstName        String            @db.VarChar(50)
-  lastName         String            @db.VarChar(50)
+  first_name        String            @db.VarChar(50)
+  last_name         String            @db.VarChar(50)
   password         String            @db.VarChar(100)
-  birthday         DateTime         @db.Date
+  is_admin          Boolean           @default(false)
+  birthday         DateTime          @db.Date
   location         String?           @db.VarChar(250)
   phone            String?           @db.VarChar(50)
   ChatMessages     ChatMessage[]
   Trainings        Training[]
   TrainingPartners TrainingPartner[]
   ExerciceLikes    ExerciceLike[]
-  Liked            UserLike[]        @relation("liked")
-  LikedBy          UserLike[]        @relation("liker")
+  liked           UserLike[]        @relation("liked")
+  like_by          UserLike[]        @relation("liker")
   UserChatGroups   UserChatGroup[]
 }
 
@@ -29,7 +30,7 @@ model Exercice {
   id                Int                @id @default(autoincrement()) @db.Integer
   name              String             @db.VarChar(100)
   difficulty        String             @db.VarChar(30)
-  isLiked           Boolean            @default(false) @db.Boolean
+  is_liked           Boolean            @default(false) @db.Boolean
   ExerciceTrainings ExerciceTraining[]
   ExerciceLikes     ExerciceLike[]
 }
@@ -110,7 +111,7 @@ model ChatGroup {
 
 model UserChatGroup {
   id            Int       @id @default(autoincrement()) @db.Integer
-  user          User      @relation(fields: [user_id], references: [id]) 
+  user          User      @relation(fields: [user_id], references: [id])
   chat_group    ChatGroup @relation(fields: [chat_group_id], references: [id])
   user_id       String    @db.Uuid
   chat_group_id Int       @db.Integer

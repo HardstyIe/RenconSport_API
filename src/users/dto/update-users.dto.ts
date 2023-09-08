@@ -2,6 +2,7 @@ import { IsDate, IsEmail, IsOptional, IsString, Length } from 'class-validator';
 
 export class UpdateUsersDto {
   @IsEmail()
+  @Length(5, 100)
   @IsOptional()
   email?: string;
 
@@ -13,12 +14,12 @@ export class UpdateUsersDto {
   @IsString()
   @Length(1, 50)
   @IsOptional()
-  firstName?: string;
+  first_name?: string;
 
   @IsString()
   @Length(1, 50)
   @IsOptional()
-  lastName?: string;
+  last_name?: string;
 
   @IsDate()
   @IsOptional()

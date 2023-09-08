@@ -1,10 +1,11 @@
 import { Prisma } from '@prisma/client';
 
 export class User implements Prisma.UserCreateInput {
+  is_admin?: boolean;
   id?: string;
   email: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   password: string;
   birthday: Date;
   location?: string;
@@ -13,7 +14,7 @@ export class User implements Prisma.UserCreateInput {
   Trainings?: Prisma.TrainingCreateNestedManyWithoutUserInput;
   TrainingPartners?: Prisma.TrainingPartnerCreateNestedManyWithoutUserInput;
   ExerciceLikes?: Prisma.ExerciceLikeCreateNestedManyWithoutUserInput;
-  Liked?: Prisma.UserLikeCreateNestedManyWithoutLikedInput;
-  LikedBy?: Prisma.UserLikeCreateNestedManyWithoutLikerInput;
+  liked?: Prisma.UserLikeCreateNestedManyWithoutLikedInput;
+  liked_by?: Prisma.UserLikeCreateNestedManyWithoutLikerInput;
   UserChatGroups?: Prisma.UserChatGroupCreateNestedManyWithoutUserInput;
 }
