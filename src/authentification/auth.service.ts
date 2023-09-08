@@ -18,23 +18,23 @@ export class AuthService {
   async login(LoginDto: LoginDto): Promise<any> {
     const { email, password } = LoginDto;
 
-    const users = await this.prismaService.user.findUnique({
+    const user = await this.prismaService.user.findUnique({
       where: {
         email: email,
       },
     });
 
-    if (!users) {
+    if (!user) {
       throw new NotFoundException(`User Not Found`);
     }
-    const validatePassword = await bcrypt.compare(password, users.password);
+    const validatePassword = await bcrypt.compare(password, user.password);
 
     if (!validatePassword) {
       throw new NotFoundException(`Password is incorrect`);
     }
 
     return {
-      token: this.jwtService.sign({ email }),
+      token: this.jwtService.sign({ uuid: user.id }),
     };
   }
 
@@ -53,7 +53,7 @@ export class AuthService {
     const user = await this.usersServices.createUser(createUsers);
 
     return {
-      token: this.jwtService.sign({ email: user.email }),
+      token: this.jwtService.sign({ uuid: user.id }),
     };
   }
 }

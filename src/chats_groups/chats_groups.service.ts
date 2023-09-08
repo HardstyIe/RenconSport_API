@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
-import { CreateChatGroupDto } from './dto/create-chat-groups.dto';
-import { UpdateChatGroupDto } from './dto/update-chat-groups.dto';
+import { CreateChatGroupDto } from './dto/create-chats_groups.dto';
+import { UpdateChatGroupDto } from './dto/update-chats_groups.dto';
 
 @Injectable()
 export class ChatGroupsService {

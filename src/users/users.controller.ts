@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Req,
   Res,
   UseGuards,
 } from '@nestjs/common';
@@ -31,6 +32,25 @@ export class UsersController {
       message: 'Successfully fetched data!',
       result: result,
     });
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/me')
+  async getMyUserInfo(
+    @Req() request: Request,
+    @Res() response: Response,
+  ): Promise<any> {
+    const user = (request as any).user;
+    if (!user || !user.id) {
+      return response.status(400).json({ message: 'User or UUID not found' });
+    }
+    const uuid = user.id;
+    const completeUserInfo = await this.usersService.getUserById(uuid);
+    console.log(typeof completeUserInfo.birthday);
+    // Supprimer les champs sensibles
+    const { password, ...safeUserInfo } = completeUserInfo;
+
+    return response.status(200).json(safeUserInfo);
   }
 
   // Get single user

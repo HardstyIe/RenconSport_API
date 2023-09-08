@@ -12,7 +12,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { ChatGroupsService } from './chats_groups.service';
 import { CreateChatGroupDto } from './dto/create-chats_groups.dto';
-import { UpdateChatGroupDto } from './dto/update-chats__groups.dto';
+import { UpdateChatGroupDto } from './dto/update-chats_groups.dto';
 
 @ApiTags('ChatGroups')
 @Controller('chat-groups')

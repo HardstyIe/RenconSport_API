@@ -14,9 +14,9 @@ model User {
   last_name        String            @db.VarChar(50)
   password         String            @db.VarChar(100)
   is_admin         Boolean           @default(false)
-  birthday         DateTime          @db.Date
+  birthday         DateTime          @db.Timestamp()
   location         String?           @db.VarChar(250)
-  phone            String?           @db.VarChar(50)
+  phoneNumber            String?           @db.VarChar(50)
   ChatMessages     ChatMessage[]
   Trainings        Training[]
   TrainingPartners TrainingPartner[]
