@@ -10,10 +10,10 @@ datasource db {
 model User {
   id               String            @id @default(uuid()) @db.Uuid
   email            String            @unique @db.VarChar(100)
-  first_name        String            @db.VarChar(50)
-  last_name         String            @db.VarChar(50)
+  first_name       String            @db.VarChar(50)
+  last_name        String            @db.VarChar(50)
   password         String            @db.VarChar(100)
-  is_admin          Boolean           @default(false)
+  is_admin         Boolean           @default(false)
   birthday         DateTime          @db.Date
   location         String?           @db.VarChar(250)
   phone            String?           @db.VarChar(50)
@@ -21,7 +21,7 @@ model User {
   Trainings        Training[]
   TrainingPartners TrainingPartner[]
   ExerciceLikes    ExerciceLike[]
-  liked           UserLike[]        @relation("liked")
+  liked            UserLike[]        @relation("liked")
   like_by          UserLike[]        @relation("liker")
   UserChatGroups   UserChatGroup[]
 }
@@ -30,7 +30,7 @@ model Exercice {
   id                Int                @id @default(autoincrement()) @db.Integer
   name              String             @db.VarChar(100)
   difficulty        String             @db.VarChar(30)
-  is_liked           Boolean            @default(false) @db.Boolean
+  is_liked          Boolean            @default(false) @db.Boolean
   ExerciceTrainings ExerciceTraining[]
   ExerciceLikes     ExerciceLike[]
 }
@@ -102,9 +102,10 @@ model UserLike {
 
 model ChatGroup {
   id             Int             @id @default(autoincrement()) @db.Integer
-  training       Training        @relation(fields: [training_id], references: [id])
-  training_id    Int             @db.Integer
+  training       Training?        @relation(fields: [training_id], references: [id])
+  training_id    Int?             @db.Integer
   name           String?         @db.VarChar(200)
+  type           String          @db.VarChar(20)
   UserChatGroups UserChatGroup[]
   ChatMessages   ChatMessage[]
 }
