@@ -6,9 +6,11 @@ CREATE TABLE "User" (
     "last_name" VARCHAR(50) NOT NULL,
     "password" VARCHAR(100) NOT NULL,
     "is_admin" BOOLEAN NOT NULL DEFAULT false,
-    "birthday" DATE NOT NULL,
+    "birthday" TIMESTAMP NOT NULL,
     "location" VARCHAR(250),
-    "phone" VARCHAR(50),
+    "phoneNumber" VARCHAR(50),
+    "googleId" TEXT,
+    "facebookId" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -91,8 +93,9 @@ CREATE TABLE "UserLike" (
 -- CreateTable
 CREATE TABLE "ChatGroup" (
     "id" SERIAL NOT NULL,
-    "training_id" INTEGER NOT NULL,
+    "training_id" INTEGER,
     "name" VARCHAR(200),
+    "type" VARCHAR(20) NOT NULL,
 
     CONSTRAINT "ChatGroup_pkey" PRIMARY KEY ("id")
 );
@@ -120,6 +123,12 @@ CREATE TABLE "Location" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_googleId_key" ON "User"("googleId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_facebookId_key" ON "User"("facebookId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "ExerciceLike_user_id_exercice_id_key" ON "ExerciceLike"("user_id", "exercice_id");
@@ -161,7 +170,7 @@ ALTER TABLE "UserLike" ADD CONSTRAINT "UserLike_liker_id_fkey" FOREIGN KEY ("lik
 ALTER TABLE "UserLike" ADD CONSTRAINT "UserLike_liked_id_fkey" FOREIGN KEY ("liked_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "ChatGroup" ADD CONSTRAINT "ChatGroup_training_id_fkey" FOREIGN KEY ("training_id") REFERENCES "Training"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "ChatGroup" ADD CONSTRAINT "ChatGroup_training_id_fkey" FOREIGN KEY ("training_id") REFERENCES "Training"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "UserChatGroup" ADD CONSTRAINT "UserChatGroup_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

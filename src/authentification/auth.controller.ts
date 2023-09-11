@@ -2,6 +2,8 @@ import { Body, Controller, Post, Req, Res } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
+import { FacebookLoginDto } from './dto/facebook-login.dto';
+import { GoogleLoginDto } from './dto/google-login.dto';
 import { LoginDto } from './dto/login-user.dto';
 import { RegisterUsersDto } from './dto/register-user.dto';
 
@@ -43,5 +45,37 @@ export class AuthController {
       message: 'Successfully register user!',
       result: result,
     });
+  }
+
+  @Post('/login-google')
+  async loginWithGoogle(
+    @Req() request: Request,
+    @Res() response: Response,
+    @Body() googleLoginDto: GoogleLoginDto,
+  ): Promise<any> {
+    try {
+      const result = await this.authService.loginWithGoogle(
+        googleLoginDto.token,
+      );
+      return response.status(200).json(result);
+    } catch (err) {
+      return response.status(500).json(err);
+    }
+  }
+
+  @Post('/login-facebook')
+  async loginWithFacebook(
+    @Req() request: Request,
+    @Res() response: Response,
+    @Body() facebookLoginDto: FacebookLoginDto,
+  ): Promise<any> {
+    try {
+      const result = await this.authService.loginWithFacebook(
+        facebookLoginDto.token,
+      );
+      return response.status(200).json(result);
+    } catch (err) {
+      return response.status(500).json(err);
+    }
   }
 }

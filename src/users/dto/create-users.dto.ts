@@ -20,4 +20,7 @@ export class CreateUsersDto {
 
   @IsDate()
   birthday: Date;
+
+  facebookId?: string;
+  googleId?: string;
 }

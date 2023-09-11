@@ -17,4 +17,6 @@ export class User implements Prisma.UserCreateInput {
   liked?: Prisma.UserLikeCreateNestedManyWithoutLikedInput;
   liked_by?: Prisma.UserLikeCreateNestedManyWithoutLikerInput;
   UserChatGroups?: Prisma.UserChatGroupCreateNestedManyWithoutUserInput;
+  facebookId?: any;
+  googleId?: string;
 }

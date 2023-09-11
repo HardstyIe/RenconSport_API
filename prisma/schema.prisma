@@ -7,6 +7,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+generator custom_generator {
+  provider = "prisma-generator-fake-data"
+  output   = "../types/fake-data.ts"
+}
+
 model User {
   id               String            @id @default(uuid()) @db.Uuid
   email            String            @unique @db.VarChar(100)
@@ -16,7 +21,7 @@ model User {
   is_admin         Boolean           @default(false)
   birthday         DateTime          @db.Timestamp()
   location         String?           @db.VarChar(250)
-  phoneNumber            String?           @db.VarChar(50)
+  phoneNumber      String?           @db.VarChar(50)
   ChatMessages     ChatMessage[]
   Trainings        Training[]
   TrainingPartners TrainingPartner[]
@@ -24,6 +29,8 @@ model User {
   liked            UserLike[]        @relation("liked")
   like_by          UserLike[]        @relation("liker")
   UserChatGroups   UserChatGroup[]
+  googleId         String?           @unique
+  facebookId       String?           @unique
 }
 
 model Exercice {
@@ -102,8 +109,8 @@ model UserLike {
 
 model ChatGroup {
   id             Int             @id @default(autoincrement()) @db.Integer
-  training       Training?        @relation(fields: [training_id], references: [id])
-  training_id    Int?             @db.Integer
+  training       Training?       @relation(fields: [training_id], references: [id])
+  training_id    Int?            @db.Integer
   name           String?         @db.VarChar(200)
   type           String          @db.VarChar(20)
   UserChatGroups UserChatGroup[]
