@@ -1,13 +1,20 @@
 import { Prisma } from '@prisma/client';
 
+export enum RegistrationMethod {
+  EMAIL = 'EMAIL',
+  GOOGLE = 'GOOGLE',
+}
+
 export class User implements Prisma.UserCreateInput {
   is_admin?: boolean;
+  
   id?: string;
   email: string;
-  first_name: string;
-  last_name: string;
+  first_name?: string;
+  last_name?: string;
+  registrationMethod?: RegistrationMethod;
   password: string;
-  birthday: Date;
+  birthday?: Date;
   location?: string;
   phoneNumber?: string;
   ChatMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput;
@@ -17,6 +24,5 @@ export class User implements Prisma.UserCreateInput {
   liked?: Prisma.UserLikeCreateNestedManyWithoutLikedInput;
   liked_by?: Prisma.UserLikeCreateNestedManyWithoutLikerInput;
   UserChatGroups?: Prisma.UserChatGroupCreateNestedManyWithoutUserInput;
-  facebookId?: any;
   googleId?: string;
 }

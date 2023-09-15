@@ -36,9 +36,7 @@ export class ChatGroupsController {
     @Body() createDto: CreateChatGroupDto,
     @Res() response: Response,
   ) {
-    const result = await this.service.createChatGroup({
-      ...createDto,
-    });
+    const result = await this.service.createChatGroup(createDto);
     return response.status(201).json(result);
   }
 

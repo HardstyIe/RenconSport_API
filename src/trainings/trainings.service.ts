@@ -40,6 +40,8 @@ export class TrainingsService {
         status: dto.status,
         dynamic_latitude: dto.dynamicLatitude,
         dynamic_longitude: dto.dynamicLongitude,
+        mode: dto.mode,
+        nb_player: dto.nbPlayer,
       },
     });
   }

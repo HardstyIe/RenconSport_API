@@ -1,6 +1,8 @@
 import { Prisma } from '@prisma/client';
 
 export class Training implements Prisma.TrainingCreateInput {
+  nb_player: number;
+  mode?: string;
   dynamic_latitude: number;
   dynamic_longitude: number;
   start_at: string | Date;

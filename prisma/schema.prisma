@@ -7,21 +7,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-generator custom_generator {
-  provider = "prisma-generator-fake-data"
-  output   = "../types/fake-data.ts"
-}
-
 model User {
-  id               String            @id @default(uuid()) @db.Uuid
-  email            String            @unique @db.VarChar(100)
-  first_name       String            @db.VarChar(50)
-  last_name        String            @db.VarChar(50)
-  password         String            @db.VarChar(100)
-  is_admin         Boolean           @default(false)
-  birthday         DateTime          @db.Timestamp()
-  location         String?           @db.VarChar(250)
-  phoneNumber      String?           @db.VarChar(50)
+  id          String    @id @default(uuid()) @db.Uuid
+  email       String    @unique @db.VarChar(100)
+  first_name  String?   @default("non définie") @db.VarChar(50)
+  last_name   String?   @default("non définie") @db.VarChar(50)
+  password    String    @db.VarChar(100)
+  is_admin    Boolean   @default(false)
+  birthday    DateTime? @db.Timestamp()
+  location    String?   @default("non définie") @db.VarChar(250)
+  phoneNumber String?   @default("non définie") @db.VarChar(50)
+  biography   String?    @db.Text @default("non définie")
+
   ChatMessages     ChatMessage[]
   Trainings        Training[]
   TrainingPartners TrainingPartner[]
@@ -29,8 +26,6 @@ model User {
   liked            UserLike[]        @relation("liked")
   like_by          UserLike[]        @relation("liker")
   UserChatGroups   UserChatGroup[]
-  googleId         String?           @unique
-  facebookId       String?           @unique
 }
 
 model Exercice {
@@ -53,13 +48,16 @@ model ChatMessage {
 }
 
 model Training {
-  id                Int                @id @default(autoincrement()) @db.Integer
-  user              User               @relation(fields: [user_id], references: [id])
-  user_id           String             @db.Uuid
-  start_at          DateTime           @db.Date
-  finish_at         DateTime           @db.Date
-  location          String             @db.VarChar(250)
-  status            String             @db.VarChar(250)
+  id        Int      @id @default(autoincrement()) @db.Integer
+  user      User     @relation(fields: [user_id], references: [id])
+  user_id   String   @db.Uuid
+  start_at  DateTime @db.Date
+  nb_player Int      @db.Integer
+  mode      String?  @db.VarChar(100)
+  finish_at DateTime @db.Date
+  location  String   @db.VarChar(250)
+  status    String   @default("A venir") @db.VarChar(250)
+
   dynamic_latitude  Float              @db.DoublePrecision
   dynamic_longitude Float              @db.DoublePrecision
   ExerciceTrainings ExerciceTraining[]

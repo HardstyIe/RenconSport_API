@@ -24,4 +24,9 @@ export class UpdateUsersDto {
   @IsDate()
   @IsOptional()
   birthday?: Date;
+
+  @IsString()
+  @Length(1, 50)
+  @IsOptional()
+  phoneNumber?: string;
 }

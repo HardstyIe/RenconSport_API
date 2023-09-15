@@ -24,4 +24,8 @@ export class CreateTrainingDto {
   dynamicLatitude: number;
 
   dynamicLongitude: number;
+
+  mode: string;
+
+  nbPlayer: number;
 }

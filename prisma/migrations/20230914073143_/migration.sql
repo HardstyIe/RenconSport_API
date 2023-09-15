@@ -2,15 +2,13 @@
 CREATE TABLE "User" (
     "id" UUID NOT NULL,
     "email" VARCHAR(100) NOT NULL,
-    "first_name" VARCHAR(50) NOT NULL,
-    "last_name" VARCHAR(50) NOT NULL,
+    "first_name" VARCHAR(50) DEFAULT 'non définie',
+    "last_name" VARCHAR(50) DEFAULT 'non définie',
     "password" VARCHAR(100) NOT NULL,
     "is_admin" BOOLEAN NOT NULL DEFAULT false,
-    "birthday" TIMESTAMP NOT NULL,
-    "location" VARCHAR(250),
-    "phoneNumber" VARCHAR(50),
-    "googleId" TEXT,
-    "facebookId" TEXT,
+    "birthday" TIMESTAMP,
+    "location" VARCHAR(250) DEFAULT 'non définie',
+    "phoneNumber" VARCHAR(50) DEFAULT 'non définie',
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -123,12 +121,6 @@ CREATE TABLE "Location" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "User_googleId_key" ON "User"("googleId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "User_facebookId_key" ON "User"("facebookId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "ExerciceLike_user_id_exercice_id_key" ON "ExerciceLike"("user_id", "exercice_id");

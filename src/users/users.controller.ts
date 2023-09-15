@@ -46,10 +46,8 @@ export class UsersController {
     }
     const uuid = user.id;
     const completeUserInfo = await this.usersService.getUserById(uuid);
-    console.log(typeof completeUserInfo.birthday);
     // Supprimer les champs sensibles
     const { password, ...safeUserInfo } = completeUserInfo;
-
     return response.status(200).json(safeUserInfo);
   }
 
@@ -70,6 +68,16 @@ export class UsersController {
     @Body() createUserDto: CreateUsersDto,
     @Res() response: Response,
   ): Promise<any> {
+    response.setHeader('Access-Control-Allow-Origin', '*');
+    response.setHeader('Access-Control-Allow-Method', [
+      'GET',
+      'POST',
+      'PUT',
+      'DELETE',
+      'HEAD',
+      'OPTIONS',
+      'PATCH',
+    ]);
     const result = await this.usersService.createUser(createUserDto);
     return response.status(201).json(result);
   }
