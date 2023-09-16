@@ -9,6 +9,7 @@ CREATE TABLE "User" (
     "birthday" TIMESTAMP,
     "location" VARCHAR(250) DEFAULT 'non définie',
     "phoneNumber" VARCHAR(50) DEFAULT 'non définie',
+    "biography" TEXT DEFAULT 'non définie',
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -39,9 +40,11 @@ CREATE TABLE "Training" (
     "id" SERIAL NOT NULL,
     "user_id" UUID NOT NULL,
     "start_at" DATE NOT NULL,
+    "nb_player" INTEGER NOT NULL,
+    "mode" VARCHAR(100),
     "finish_at" DATE NOT NULL,
     "location" VARCHAR(250) NOT NULL,
-    "status" VARCHAR(250) NOT NULL,
+    "status" VARCHAR(250) NOT NULL DEFAULT 'A venir',
     "dynamic_latitude" DOUBLE PRECISION NOT NULL,
     "dynamic_longitude" DOUBLE PRECISION NOT NULL,
 
