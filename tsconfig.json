@@ -20,6 +20,7 @@
   },
   "include": [
     "src/**/*.ts",
-    "types.d.ts"
+    "types.d.ts",
+    "prisma/seed.ts",
   ]
 }
