@@ -15,7 +15,7 @@ export class TrainingsService {
     });
   }
 
-  async getTrainingById(id: number): Promise<Training> {
+  async getTrainingById(id: string): Promise<Training> {
     const training = await this.prisma.training.findUnique({
       where: { id },
       include: {
@@ -32,22 +32,22 @@ export class TrainingsService {
     return this.prisma.training.create({
       data: {
         user: {
-          connect: { id: dto.userId },
+          connect: { id: dto.user },
         },
-        start_at: dto.startAt, // Remarquez le changement ici
-        finish_at: dto.finishAt, // et ici
-        location: dto.location,
-        status: dto.status,
-        dynamic_latitude: dto.dynamicLatitude,
-        dynamic_longitude: dto.dynamicLongitude,
+        finishedAt: dto.finishedAt,
+        startedAt: dto.startedAt,
         mode: dto.mode,
-        nb_player: dto.nbPlayer,
+        partners: {
+          connect: {
+            id: dto.user,
+          },
+        },
       },
     });
   }
 
   async updateTraining(
-    id: number,
+    id: string,
     dto: Partial<CreateTrainingDto>,
   ): Promise<Training> {
     const existing = await this.getTrainingById(id);
@@ -57,11 +57,23 @@ export class TrainingsService {
 
     return this.prisma.training.update({
       where: { id },
-      data: dto,
+      data: {
+        user: {
+          connect: { id: dto.user },
+        },
+        finishedAt: dto.finishedAt,
+        startedAt: dto.startedAt,
+        mode: dto.mode,
+        partners: {
+          connect: {
+            id: dto.user,
+          },
+        },
+      },
     });
   }
 
-  async deleteTraining(id: number): Promise<Training> {
+  async deleteTraining(id: string): Promise<Training> {
     const existing = await this.getTrainingById(id);
     if (!existing) {
       throw new NotFoundException(`No Training found with ID ${id}`);

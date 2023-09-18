@@ -1,31 +1,40 @@
-import { IsDateString, IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { Group, LocationType, Round, User } from '@prisma/client';
+import {
+  IsArray,
+  IsDateString,
+  IsNotEmpty,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
 export class CreateTrainingDto {
   @IsUUID()
   @IsNotEmpty()
-  userId: string;
+  user: string;
 
   @IsDateString()
   @IsNotEmpty()
-  startAt: Date;
+  startedAt: Date;
 
   @IsDateString()
   @IsNotEmpty()
-  finishAt: Date;
+  finishedAt: Date;
 
   @IsString()
   @IsNotEmpty()
-  location: string;
+  location: LocationType;
 
-  @IsString()
+  @IsArray()
   @IsNotEmpty()
-  status: string;
+  group: Group;
 
-  dynamicLatitude: number;
+  @IsArray()
+  @IsNotEmpty()
+  rounds: Round[];
 
-  dynamicLongitude: number;
+  @IsArray()
+  @IsNotEmpty()
+  partners: User[];
 
   mode: string;
-
-  nbPlayer: number;
 }

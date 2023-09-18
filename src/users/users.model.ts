@@ -6,23 +6,20 @@ export enum RegistrationMethod {
 }
 
 export class User implements Prisma.UserCreateInput {
-  is_admin?: boolean;
-  
   id?: string;
   email: string;
-  first_name?: string;
-  last_name?: string;
-  registrationMethod?: RegistrationMethod;
-  password: string;
-  birthday?: Date;
-  location?: string;
   phoneNumber?: string;
-  ChatMessages?: Prisma.ChatMessageCreateNestedManyWithoutSenderInput;
-  Trainings?: Prisma.TrainingCreateNestedManyWithoutUserInput;
-  TrainingPartners?: Prisma.TrainingPartnerCreateNestedManyWithoutUserInput;
-  ExerciceLikes?: Prisma.ExerciceLikeCreateNestedManyWithoutUserInput;
-  liked?: Prisma.UserLikeCreateNestedManyWithoutLikedInput;
-  liked_by?: Prisma.UserLikeCreateNestedManyWithoutLikerInput;
-  UserChatGroups?: Prisma.UserChatGroupCreateNestedManyWithoutUserInput;
-  googleId?: string;
+  password: string;
+  firstName?: string;
+  lastName?: string;
+  biography?: string;
+  birthday?: string | Date;
+  isAdmin?: boolean;
+  location?: Prisma.LocationCreateNestedOneWithoutUserInput;
+  messages?: Prisma.MessageCreateNestedManyWithoutSenderInput;
+  likedExercices?: Prisma.ExerciceCreateNestedManyWithoutUsersInput;
+  likedUsers?: Prisma.UserCreateNestedManyWithoutLikedByInput;
+  likedBy?: Prisma.UserCreateNestedManyWithoutLikedUsersInput;
+  createdTrainings?: Prisma.TrainingCreateNestedManyWithoutUserInput;
+  joinedTrainings?: Prisma.TrainingCreateNestedManyWithoutPartnersInput;
 }

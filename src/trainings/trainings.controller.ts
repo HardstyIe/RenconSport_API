@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
-import { JwtAuthGuard } from 'src/authentification/auth.guard';
+import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { CreateTrainingDto } from './dto/create-trainings.dto';
 import { TrainingsService } from './trainings.service';
 
@@ -30,7 +30,7 @@ export class TrainingsController {
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   async getTrainingById(@Param('id') id: string, @Res() response: Response) {
-    const result = await this.service.getTrainingById(+id);
+    const result = await this.service.getTrainingById(id);
     return response.status(200).json(result);
   }
 
@@ -50,14 +50,14 @@ export class TrainingsController {
     @Body() updateDto: CreateTrainingDto,
     @Res() response: Response,
   ) {
-    const result = await this.service.updateTraining(+id, updateDto);
+    const result = await this.service.updateTraining(id, updateDto);
     return response.status(200).json(result);
   }
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
   async deleteTraining(@Param('id') id: string, @Res() response: Response) {
-    const result = await this.service.deleteTraining(+id);
+    const result = await this.service.deleteTraining(id);
     return response.status(200).json(result);
   }
 }

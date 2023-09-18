@@ -24,6 +24,7 @@ const main = async () => {
           lastName: 'test2',
           isAdmin: false,
           phoneNumber: '0710245106',
+          profilPicture: 'ddkaodzjao.png',
         },
         {
           email: 'test2@test.com',
@@ -34,6 +35,7 @@ const main = async () => {
           lastName: 'test2',
           isAdmin: false,
           phoneNumber: '0310245106',
+          profilPicture: 'dofafa.png',
         },
         {
           email: 'test3@test.com',
@@ -44,6 +46,7 @@ const main = async () => {
           lastName: 'test2',
           isAdmin: true,
           phoneNumber: '0210245106',
+          profilPicture: 'dofadazdadzfa.png',
         },
       ] as Prisma.UserCreateInput[]
     ).map((user) =>
@@ -79,13 +82,29 @@ const main = async () => {
             },
           },
           partners: {
-            connect: [{ id: users[0].id }, { id: users[2].id }],
+            connect: [{ id: users[1].id }, { id: users[2].id }],
           },
         },
       ] as Prisma.TrainingCreateInput[]
     ).map((training) =>
       prismaClient.training.create({
         data: training,
+      }),
+    ),
+  );
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const sports = await Promise.all(
+    (
+      [
+        {
+          name: 'Musculation',
+          icon: 'eookfezo.png',
+        },
+      ] as Prisma.SportCreateInput[]
+    ).map((sport) =>
+      prismaClient.sport.create({
+        data: sport,
       }),
     ),
   );

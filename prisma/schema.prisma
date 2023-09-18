@@ -4,20 +4,21 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("PRISMA_URL")
+  url      = env("RENDER_URL")
 }
 
 model User {
   id String @id @default(uuid())
 
-  email       String    @unique
-  phoneNumber String?
-  password    String
-  firstName   String?
-  lastName    String?
-  biography   String?
-  birthday    DateTime?
-  isAdmin     Boolean   @default(false)
+  email         String    @unique
+  phoneNumber   String?
+  password      String
+  firstName     String?
+  lastName      String?
+  biography     String?
+  birthday      DateTime?
+  isAdmin       Boolean   @default(false)
+  profilPicture String?
 
   location Location?
 
@@ -47,8 +48,10 @@ model Location {
 model Training {
   id String @id @default(uuid())
 
-  user   User   @relation("CreatedTrainings", fields: [userId], references: [id])
-  userId String
+  user    User    @relation("CreatedTrainings", fields: [userId], references: [id])
+  userId  String
+  Sport   Sport?  @relation(fields: [sportId], references: [id])
+  sportId String?
 
   startedAt  DateTime
   finishedAt DateTime
@@ -59,6 +62,15 @@ model Training {
 
   rounds   Round[]
   partners User[]  @relation("JoinedTrainings")
+}
+
+model Sport {
+  id String @id @default(uuid())
+
+  name String
+  icon String
+
+  trainings Training[]
 }
 
 model Exercice {

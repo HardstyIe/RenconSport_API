@@ -1,16 +1,13 @@
 import { Prisma } from '@prisma/client';
 
 export class Training implements Prisma.TrainingCreateInput {
-  nb_player: number;
-  mode?: string;
-  dynamic_latitude: number;
-  dynamic_longitude: number;
-  start_at: string | Date;
-  finish_at: string | Date;
-  location: string;
-  status: string;
-  user: Prisma.UserCreateNestedOneWithoutTrainingsInput;
-  ExerciceTrainings?: Prisma.ExerciceTrainingCreateNestedManyWithoutTrainingInput;
-  TrainingPartners?: Prisma.TrainingPartnerCreateNestedManyWithoutTrainingInput;
-  ChatGroups?: Prisma.ChatGroupCreateNestedManyWithoutTrainingInput;
+  id?: string;
+  startedAt: string | Date;
+  finishedAt: string | Date;
+  mode: string;
+  user: Prisma.UserCreateNestedOneWithoutCreatedTrainingsInput;
+  group?: Prisma.GroupCreateNestedOneWithoutTrainingInput;
+  location?: Prisma.LocationCreateNestedOneWithoutTrainingInput;
+  rounds?: Prisma.RoundCreateNestedManyWithoutTrainingInput;
+  partners?: Prisma.UserCreateNestedManyWithoutJoinedTrainingsInput;
 }

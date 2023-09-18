@@ -8,17 +8,17 @@ import {
   Put,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateLocationDto } from './dto/create-locations.dto';
-import { UpdateLocationDto } from './dto/update-locations.dto';
-import { LocationService } from './locations.service';
+import { CreateRoundDto } from './dto/create-rounds.dto';
+import { UpdateRoundDto } from './dto/update-rounds.dto';
+import { RoundService } from './rounds.service';
 
-@ApiTags('Locations')
-@Controller('locations')
-export class LocationController {
-  constructor(private readonly service: LocationService) {}
+@ApiTags('Rounds')
+@Controller('rounds')
+export class RoundController {
+  constructor(private readonly service: RoundService) {}
 
   @Post()
-  create(@Body() createDto: CreateLocationDto) {
+  create(@Body() createDto: CreateRoundDto) {
     return this.service.create(createDto);
   }
 
@@ -33,7 +33,7 @@ export class LocationController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateDto: UpdateLocationDto) {
+  update(@Param('id') id: string, @Body() updateDto: UpdateRoundDto) {
     return this.service.update(id, updateDto);
   }
 

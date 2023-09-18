@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
-import { JwtAuthGuard } from 'src/authentification/auth.guard';
+import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { CreateUsersDto } from './dto/create-users.dto'; // À créer
 import { UpdateUsersDto } from './dto/update-users.dto'; // À créer
 import { UsersServices } from './users.service';

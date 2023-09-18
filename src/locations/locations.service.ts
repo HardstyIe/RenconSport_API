@@ -9,14 +9,23 @@ export class LocationService {
 
   async create(dto: CreateLocationDto) {
     return this.prisma.location.create({
-      data: dto,
+      data: {
+        latitude: dto.latitude,
+        longitude: dto.longitude,
+        type: dto.type,
+      },
     });
   }
 
-  async update(id: number, dto: UpdateLocationDto) {
+  async update(id: string, dto: UpdateLocationDto) {
     return this.prisma.location.update({
       where: { id },
-      data: dto,
+      data: {
+        address: dto.address,
+        name: dto.name,
+        latitude: dto.latitude,
+        longitude: dto.longitude,
+      },
     });
   }
 
@@ -24,13 +33,13 @@ export class LocationService {
     return this.prisma.location.findMany();
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     return this.prisma.location.findUnique({
       where: { id },
     });
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     return this.prisma.location.delete({
       where: { id },
     });

@@ -1,3 +1,4 @@
+import { LocationType } from '@prisma/client';
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateLocationDto {
@@ -11,7 +12,7 @@ export class CreateLocationDto {
 
   @IsNotEmpty()
   @IsString()
-  type: string;
+  type: LocationType;
 
   @IsNotEmpty()
   @IsNumber()
