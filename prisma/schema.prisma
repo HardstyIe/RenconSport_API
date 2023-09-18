@@ -4,21 +4,21 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("RENDER_URL")
+  url      = env("PRISMA_URL")
 }
 
 model User {
   id String @id @default(uuid())
 
-  email         String    @unique
-  phoneNumber   String?
-  password      String
-  firstName     String?
-  lastName      String?
-  biography     String?
-  birthday      DateTime?
-  isAdmin       Boolean   @default(false)
-  profilPicture String?
+  email       String    @unique
+  phoneNumber String?
+  password    String
+  firstName   String?
+  lastName    String?
+  biography   String?
+  birthday    DateTime?
+  isAdmin     Boolean   @default(false)
+  avatar      String?
 
   location Location?
 

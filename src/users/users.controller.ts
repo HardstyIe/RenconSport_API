@@ -25,24 +25,17 @@ export class UsersController {
   // Get all users
   @Get()
   @UseGuards(JwtAuthGuard)
-  async getAllUsers(@Res() response: Response): Promise<any> {
+  async getAllUsers() {
     const result = await this.usersService.getAllUsers();
-    return response.status(200).json({
-      status: 'Ok!',
-      message: 'Successfully fetched data!',
-      result: result,
-    });
+    return result;
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('/me')
-  async getMyUserInfo(
-    @Req() request: Request,
-    @Res() response: Response,
-  ): Promise<any> {
+  async getMyUserInfo(@Req() request: Request, @Res() response: Response) {
     const user = (request as any).user;
     if (!user || !user.id) {
-      return response.status(400).json({ message: 'User or UUID not found' });
+      return response.status(400).json({ message: 'User not found' });
     }
     const uuid = user.id;
     const completeUserInfo = await this.usersService.getUserById(uuid);
@@ -54,10 +47,7 @@ export class UsersController {
   // Get single user
   @Get(':id')
   @UseGuards(JwtAuthGuard)
-  async getUserById(
-    @Param('id') id: string,
-    @Res() response: Response,
-  ): Promise<any> {
+  async getUserById(@Param('id') id: string, @Res() response: Response) {
     const result = await this.usersService.getUserById(id);
     return response.status(200).json(result);
   }
@@ -67,17 +57,7 @@ export class UsersController {
   async createUser(
     @Body() createUserDto: CreateUsersDto,
     @Res() response: Response,
-  ): Promise<any> {
-    response.setHeader('Access-Control-Allow-Origin', '*');
-    response.setHeader('Access-Control-Allow-Method', [
-      'GET',
-      'POST',
-      'PUT',
-      'DELETE',
-      'HEAD',
-      'OPTIONS',
-      'PATCH',
-    ]);
+  ) {
     const result = await this.usersService.createUser(createUserDto);
     return response.status(201).json(result);
   }
@@ -89,7 +69,7 @@ export class UsersController {
     @Param('id') id: string,
     @Body() updateUsersDto: UpdateUsersDto,
     @Res() response: Response,
-  ): Promise<any> {
+  ) {
     const result = await this.usersService.updateUser(id, updateUsersDto);
     return response.status(200).json(result);
   }
@@ -97,10 +77,7 @@ export class UsersController {
   // Delete user
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
-  async deleteUser(
-    @Param('id') id: string,
-    @Res() response: Response,
-  ): Promise<any> {
+  async deleteUser(@Param('id') id: string, @Res() response: Response) {
     const result = await this.usersService.deleteUser(id);
     return response.status(200).json(result);
   }

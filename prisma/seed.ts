@@ -24,7 +24,7 @@ const main = async () => {
           lastName: 'test2',
           isAdmin: false,
           phoneNumber: '0710245106',
-          profilPicture: 'ddkaodzjao.png',
+          avatar: 'ddkaodzjao.png',
         },
         {
           email: 'test2@test.com',
@@ -35,7 +35,7 @@ const main = async () => {
           lastName: 'test2',
           isAdmin: false,
           phoneNumber: '0310245106',
-          profilPicture: 'dofafa.png',
+          avatar: 'dofafa.png',
         },
         {
           email: 'test3@test.com',
@@ -46,7 +46,7 @@ const main = async () => {
           lastName: 'test2',
           isAdmin: true,
           phoneNumber: '0210245106',
-          profilPicture: 'dofadazdadzfa.png',
+          avatar: 'dofadazdadzfa.png',
         },
       ] as Prisma.UserCreateInput[]
     ).map((user) =>
