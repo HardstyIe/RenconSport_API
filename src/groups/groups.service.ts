@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { Type } from '@prisma/client';
 import { PrismaService } from '../prisma.service';
 import { CreateGroupDto } from './dto/create-groups.dto';
 import { UpdateGroupDto } from './dto/update-groups.dto';
@@ -25,7 +24,7 @@ export class GroupService {
             id: dto.training,
           },
         },
-        type: Type.PUBLIC,
+        type: dto.type,
       },
     });
   }
@@ -40,7 +39,7 @@ export class GroupService {
             id: dto.training_id,
           },
         },
-        type: Type.PUBLIC,
+        type: dto.type,
       },
     });
   }

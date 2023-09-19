@@ -25,6 +25,7 @@ export class LocationService {
         name: dto.name,
         latitude: dto.latitude,
         longitude: dto.longitude,
+        type: dto.type,
       },
     });
   }

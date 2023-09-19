@@ -1,3 +1,4 @@
+import { Type } from '@prisma/client';
 import { IsOptional, IsString } from 'class-validator';
 
 export class UpdateGroupDto {
@@ -10,5 +11,5 @@ export class UpdateGroupDto {
 
   @IsOptional()
   @IsString()
-  type?: string;
+  type?: Type;
 }

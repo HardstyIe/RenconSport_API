@@ -1,3 +1,4 @@
+import { Type } from '@prisma/client';
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateGroupDto {
@@ -10,5 +11,5 @@ export class CreateGroupDto {
 
   @IsNotEmpty()
   @IsString()
-  type: string;
+  type: Type;
 }
