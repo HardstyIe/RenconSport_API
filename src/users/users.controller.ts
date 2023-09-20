@@ -39,7 +39,6 @@ export class UsersController {
     }
     const uuid = user.id;
     const completeUserInfo = await this.usersService.getUserById(uuid);
-    // Supprimer les champs sensibles
     const { password, ...safeUserInfo } = completeUserInfo;
     return response.status(200).json(safeUserInfo);
   }
@@ -49,6 +48,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   async getUserById(@Param('id') id: string, @Res() response: Response) {
     const result = await this.usersService.getUserById(id);
+
     return response.status(200).json(result);
   }
 
@@ -79,6 +79,23 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   async deleteUser(@Param('id') id: string, @Res() response: Response) {
     const result = await this.usersService.deleteUser(id);
+    return response.status(200).json(result);
+  }
+
+  @Get('with-groups/:id')
+  @UseGuards(JwtAuthGuard)
+  async getUserWithGroups(@Param('id') id: string, @Res() response: Response) {
+    const result = await this.usersService.getUserWithGroups(id);
+    return response.status(200).json(result);
+  }
+
+  @Get('with-trainings/:id')
+  @UseGuards(JwtAuthGuard)
+  async getUserWithTrainings(
+    @Param('id') id: string,
+    @Res() response: Response,
+  ) {
+    const result = await this.usersService.getUserWithTrainings(id);
     return response.status(200).json(result);
   }
 }

@@ -11,8 +11,23 @@ export class TrainingsService {
     return this.prisma.training.findMany({
       include: {
         user: true,
+        location: true,
+        partners: true,
+        rounds: true,
+        Sport: true,
       },
     });
+  }
+
+  async getAllTrainingsExceptUser(id: string): Promise<Training[]> {
+    const trainings = await this.prisma.training.findMany({
+      where: {
+        NOT: {
+          userId: id,
+        },
+      },
+    });
+    return trainings;
   }
 
   async getTrainingById(id: string): Promise<Training> {
@@ -20,6 +35,11 @@ export class TrainingsService {
       where: { id },
       include: {
         user: true,
+        location: true,
+        partners: true,
+        rounds: true,
+        Sport: true,
+        
       },
     });
     if (!training) {

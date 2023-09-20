@@ -27,6 +27,16 @@ export class TrainingsController {
     return response.status(200).json(result);
   }
 
+  @Get('except/:id')
+  @UseGuards(JwtAuthGuard)
+  async getAllTrainingsExceptUser(
+    @Param('id') id: string,
+    @Res() response: Response,
+  ) {
+    const result = await this.service.getAllTrainingsExceptUser(id);
+    return response.status(200).json(result);
+  }
+
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   async getTrainingById(@Param('id') id: string, @Res() response: Response) {

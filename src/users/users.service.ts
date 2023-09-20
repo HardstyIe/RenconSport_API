@@ -21,6 +21,7 @@ export class UsersServices {
     if (!user) {
       throw new NotFoundException(`No user found with the ID ${id}.`);
     }
+
     return user;
   }
 
@@ -63,5 +64,35 @@ export class UsersServices {
     return this.prisma.user.delete({
       where: { id: id },
     });
+  }
+
+  async getUserWithGroups(id: string): Promise<User> {
+    const user = await this.prisma.user.findUnique({
+      where: { id: id },
+      include: {
+        messages: {
+          include: {
+            group: true,
+          },
+        },
+      },
+    });
+    if (!user) {
+      throw new NotFoundException(`No user found with the ID ${id}.`);
+    }
+    return user;
+  }
+
+  async getUserWithTrainings(id: string): Promise<User> {
+    const user = await this.prisma.user.findUnique({
+      where: { id: id },
+      include: {
+        createdTrainings: true,
+      },
+    });
+    if (!user) {
+      throw new NotFoundException(`No user found with the ID ${id}.`);
+    }
+    return user;
   }
 }

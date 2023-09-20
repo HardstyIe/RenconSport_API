@@ -24,7 +24,7 @@ const main = async () => {
           lastName: 'test2',
           isAdmin: false,
           phoneNumber: '0710245106',
-          avatar: 'ddkaodzjao.png',
+          avatar: 'ddkaodzjao.png', 
         },
         {
           email: 'test2@test.com',
