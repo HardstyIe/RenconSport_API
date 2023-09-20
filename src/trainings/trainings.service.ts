@@ -14,7 +14,7 @@ export class TrainingsService {
         location: true,
         partners: true,
         rounds: true,
-        Sport: true,
+        sport: true,
       },
     });
   }
@@ -38,8 +38,7 @@ export class TrainingsService {
         location: true,
         partners: true,
         rounds: true,
-        Sport: true,
-        
+        sport: true,
       },
     });
     if (!training) {

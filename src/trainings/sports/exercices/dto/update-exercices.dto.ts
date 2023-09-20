@@ -21,4 +21,8 @@ export class UpdateExerciceDto {
   @IsOptional()
   @IsString()
   user?: User;
+
+  @IsOptional()
+  @IsString()
+  sport?: string;
 }

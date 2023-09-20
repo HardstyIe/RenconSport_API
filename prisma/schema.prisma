@@ -50,7 +50,7 @@ model Training {
 
   user    User    @relation("CreatedTrainings", fields: [userId], references: [id])
   userId  String
-  Sport   Sport?  @relation(fields: [sportId], references: [id])
+  sport   Sport?  @relation(fields: [sportId], references: [id])
   sportId String?
 
   startedAt  DateTime
@@ -71,10 +71,14 @@ model Sport {
   icon String
 
   trainings Training[]
+  exercices Exercice[]
 }
 
 model Exercice {
   id String @id @default(uuid())
+
+  sport   Sport  @relation(fields: [sportId], references: [id])
+  sportId String
 
   name       String
   difficulty Difficulty

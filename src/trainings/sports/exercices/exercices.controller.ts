@@ -7,9 +7,11 @@ import {
   Post,
   Put,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
+import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { CreateExerciceDto } from './dto/create-exercices.dto';
 import { UpdateExerciceDto } from './dto/update-exercices.dto';
 import { ExercicesService } from './exercices.service';
@@ -20,18 +22,21 @@ export class ExercicesController {
   constructor(private readonly service: ExercicesService) {}
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   async getAllExercices(@Res() response: Response) {
     const result = await this.service.getAllExercices();
     return response.status(200).json(result);
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   async getExerciceById(@Param('id') id: string, @Res() response: Response) {
     const result = await this.service.getExerciceById(id);
     return response.status(200).json(result);
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   async createExercice(
     @Body() createDto: CreateExerciceDto,
     @Res() response: Response,
@@ -41,6 +46,7 @@ export class ExercicesController {
   }
 
   @Put(':id')
+  @UseGuards(JwtAuthGuard)
   async updateExercice(
     @Param('id') id: string,
     @Body() updateDto: UpdateExerciceDto,
@@ -51,6 +57,7 @@ export class ExercicesController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   async deleteExercice(@Param('id') id: string, @Res() response: Response) {
     const result = await this.service.deleteExercice(id);
     return response.status(200).json(result);

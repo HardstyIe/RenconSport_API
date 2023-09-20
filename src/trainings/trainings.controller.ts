@@ -45,6 +45,7 @@ export class TrainingsController {
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   async createTraining(
     @Body() createDto: CreateTrainingDto,
     @Res() response: Response,

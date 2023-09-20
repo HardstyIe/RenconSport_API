@@ -36,6 +36,7 @@ export class SportsController {
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   async createSport(
     @Body() createDto: CreateSportDto,
     @Res() response: Response,

@@ -20,4 +20,8 @@ export class CreateExerciceDto {
   @IsNotEmpty()
   @IsString()
   user: User;
+
+  @IsNotEmpty()
+  @IsString()
+  sport: string;
 }

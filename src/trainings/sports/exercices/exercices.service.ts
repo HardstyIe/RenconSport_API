@@ -30,6 +30,11 @@ export class ExercicesService {
             id: dto.user.id,
           },
         },
+        sport: {
+          connect: {
+            id: dto.sport,
+          },
+        },
       },
     });
   }

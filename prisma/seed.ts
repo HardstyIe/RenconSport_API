@@ -1,5 +1,6 @@
 import { Temporal } from '@js-temporal/polyfill';
 import { Prisma, PrismaClient } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
 
 const prismaClient = new PrismaClient();
 
@@ -17,18 +18,18 @@ const main = async () => {
       [
         {
           email: 'test@test.com',
-          password: 'password',
+          password: await bcrypt.hash('password', 10),
           biography: 'ceci est un test',
           birthday: new Date('1970-05-01'),
           firstName: 'test',
           lastName: 'test2',
           isAdmin: false,
           phoneNumber: '0710245106',
-          avatar: 'ddkaodzjao.png', 
+          avatar: 'ddkaodzjao.png',
         },
         {
           email: 'test2@test.com',
-          password: 'password',
+          password: await bcrypt.hash('password', 10),
           biography: 'ceci est un test',
           birthday: new Date('1970-05-01'),
           firstName: 'tes3',
@@ -39,7 +40,7 @@ const main = async () => {
         },
         {
           email: 'test3@test.com',
-          password: 'password',
+          password: await bcrypt.hash('password', 10),
           biography: 'ceci est un test',
           birthday: new Date('1970-05-01'),
           firstName: 'test2',
@@ -69,6 +70,30 @@ const main = async () => {
     },
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const sports = await Promise.all(
+    (
+      [
+        { name: 'Musculation', icon: 'eookfezo.png' },
+        { name: 'Course', icon: 'eookfezo.png' },
+        { name: 'Boxing', icon: 'eookfezo.png' },
+        { name: 'Football', icon: 'eookfezo.png' },
+        { name: 'Basketball', icon: 'eookfezo.png' },
+        { name: 'Tennis', icon: 'eookfezo.png' },
+        { name: 'Natation', icon: 'eookfezo.png' },
+        { name: 'Handball', icon: 'eookfezo.png' },
+        { name: 'Volleyball', icon: 'eookfezo.png' },
+        { name: 'Rugby', icon: 'eookfezo.png' },
+        { name: 'Golf', icon: 'eookfezo.png' },
+        { name: 'Athlétisme', icon: 'eookfezo.png' },
+      ] as Prisma.SportCreateInput[]
+    ).map((sport) =>
+      prismaClient.sport.create({
+        data: sport,
+      }),
+    ),
+  );
+
   const trainings = await Promise.all(
     (
       [
@@ -84,6 +109,11 @@ const main = async () => {
           partners: {
             connect: [{ id: users[1].id }, { id: users[2].id }],
           },
+          sport: {
+            connect: {
+              id: sports[0].id,
+            },
+          },
         },
       ] as Prisma.TrainingCreateInput[]
     ).map((training) =>
@@ -93,35 +123,131 @@ const main = async () => {
     ),
   );
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const sports = await Promise.all(
-    (
-      [
-        {
-          name: 'Musculation',
-          icon: 'eookfezo.png',
-        },
-      ] as Prisma.SportCreateInput[]
-    ).map((sport) =>
-      prismaClient.sport.create({
-        data: sport,
-      }),
-    ),
-  );
-
   const exercices = await Promise.all(
     (
       [
         {
-          name: 'course',
+          name: 'Benchpress',
+          difficulty: 'MEDIUM',
+          sport: { connect: { id: sports[0].id } },
+        },
+        {
+          name: 'Squat',
+          difficulty: 'HARD',
+          sport: { connect: { id: sports[0].id } },
+        },
+        {
+          name: 'Jogging',
           difficulty: 'EASY',
+          sport: { connect: { id: sports[1].id } },
+        },
+        {
+          name: 'Sprint',
+          difficulty: 'MEDIUM',
+          sport: { connect: { id: sports[1].id } },
+        },
+        {
+          name: 'Punch',
+          difficulty: 'MEDIUM',
+          sport: { connect: { id: sports[2].id } },
+        },
+        {
+          name: 'Kick',
+          difficulty: 'MEDIUM',
+          sport: { connect: { id: sports[2].id } },
+        },
+        {
+          name: 'Dribbling',
+          difficulty: 'MEDIUM',
+          sport: { connect: { id: sports[3].id } },
+        },
+        {
+          name: 'Passing',
+          difficulty: 'EASY',
+          sport: { connect: { id: sports[3].id } },
+        },
+        {
+          name: 'Free Throw',
+          difficulty: 'EASY',
+          sport: { connect: { id: sports[4].id } },
+        },
+        {
+          name: 'Three Pointer',
+          difficulty: 'HARD',
+          sport: { connect: { id: sports[4].id } },
+        },
+        {
+          name: 'Serve',
+          difficulty: 'MEDIUM',
+          sport: { connect: { id: sports[5].id } },
+        },
+        {
+          name: 'Volley',
+          difficulty: 'HARD',
+          sport: { connect: { id: sports[5].id } },
+        },
+        {
+          name: 'Freestyle',
+          difficulty: 'MEDIUM',
+          sport: { connect: { id: sports[6].id } },
+        },
+        {
+          name: 'Backstroke',
+          difficulty: 'MEDIUM',
+          sport: { connect: { id: sports[6].id } },
+        },
+        {
+          name: 'Throw',
+          difficulty: 'EASY',
+          sport: { connect: { id: sports[7].id } },
+        },
+        {
+          name: 'Catch',
+          difficulty: 'MEDIUM',
+          sport: { connect: { id: sports[7].id } },
+        },
+        {
+          name: 'Spike',
+          difficulty: 'HARD',
+          sport: { connect: { id: sports[8].id } },
+        },
+        {
+          name: 'Block',
+          difficulty: 'MEDIUM',
+          sport: { connect: { id: sports[8].id } },
+        },
+        {
+          name: 'Tackle',
+          difficulty: 'MEDIUM',
+          sport: { connect: { id: sports[9].id } },
+        },
+        {
+          name: 'Scrum',
+          difficulty: 'HARD',
+          sport: { connect: { id: sports[9].id } },
+        },
+        {
+          name: 'Swing',
+          difficulty: 'MEDIUM',
+          sport: { connect: { id: sports[10].id } },
+        },
+        {
+          name: 'Putt',
+          difficulty: 'EASY',
+          sport: { connect: { id: sports[10].id } },
+        },
+        {
+          name: 'Long Jump',
+          difficulty: 'MEDIUM',
+          sport: { connect: { id: sports[11].id } },
+        },
+        {
+          name: 'High Jump',
+          difficulty: 'HARD',
+          sport: { connect: { id: sports[11].id } },
         },
       ] as Prisma.ExerciceCreateInput[]
-    ).map((exercice) =>
-      prismaClient.exercice.create({
-        data: exercice,
-      }),
-    ),
+    ).map((exercice) => prismaClient.exercice.create({ data: exercice })),
   );
 
   await prismaClient.user.update({
