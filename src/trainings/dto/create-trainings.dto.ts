@@ -1,16 +1,10 @@
-import { Group, LocationType, Round, User } from '@prisma/client';
-import {
-  IsArray,
-  IsDateString,
-  IsNotEmpty,
-  IsString,
-  IsUUID,
-} from 'class-validator';
+import { Group, LocationType, Round } from '@prisma/client';
+import { IsDateString, IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
 export class CreateTrainingDto {
   @IsUUID()
   @IsNotEmpty()
-  user: string;
+  user: string; // Cela devrait être l'ID de l'utilisateur créant l'entraînement
 
   @IsDateString()
   @IsNotEmpty()
@@ -24,17 +18,15 @@ export class CreateTrainingDto {
   @IsNotEmpty()
   location: LocationType;
 
-  @IsArray()
-  @IsNotEmpty()
   group: Group;
 
-  @IsArray()
-  @IsNotEmpty()
   rounds: Round[];
 
-  @IsArray()
+  @IsUUID()
   @IsNotEmpty()
-  partners: User[];
+  partners: string[];
 
+  @IsString()
+  @IsNotEmpty()
   mode: string;
 }

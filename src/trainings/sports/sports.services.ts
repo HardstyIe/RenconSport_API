@@ -12,6 +12,21 @@ export class SportsService {
     return this.prisma.sport.findMany();
   }
 
+  async getAllSportsWithExercices(): Promise<Sport[]> {
+    return this.prisma.sport.findMany({
+      include: {
+        exercices: {
+          select: {
+            difficulty: true,
+            id: true,
+            name: true,
+            rounds: true,
+          },
+        },
+      },
+    });
+  }
+
   async getSportById(id: string): Promise<Sport> {
     return this.prisma.sport.findUnique({ where: { id } });
   }

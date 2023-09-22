@@ -4,6 +4,7 @@ import { MessagesModule } from './groups/messages/messages.module';
 import { LocationModule } from './locations/locations.module';
 import { ExercicesModule } from './trainings/sports/exercices/exercices.module';
 import { ExerciceTrainingModule } from './trainings/sports/exercices/rounds/rounds.module';
+import { SportsModule } from './trainings/sports/sports.module';
 import { TrainingsModule } from './trainings/trainings.module';
 import { UsersModule } from './users/users.module';
 
@@ -16,6 +17,7 @@ import { UsersModule } from './users/users.module';
     ExerciceTrainingModule,
     ExercicesModule,
     MessagesModule,
+    SportsModule,
   ],
   controllers: [],
   providers: [],

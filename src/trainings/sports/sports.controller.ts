@@ -27,6 +27,12 @@ export class SportsController {
     const result = await this.service.getAllSports();
     return response.status(200).json(result);
   }
+  @Get('with-exercice')
+  @UseGuards(JwtAuthGuard)
+  async getAllSportsWithExercices(@Res() response: Response) {
+    const result = await this.service.getAllSportsWithExercices();
+    return response.status(200).json(result);
+  }
 
   @Get(':id')
   @UseGuards(JwtAuthGuard)
