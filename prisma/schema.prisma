@@ -10,7 +10,7 @@ datasource db {
 model User {
   id String @id @default(uuid())
 
-  email       String    @unique
+  email       String @unique
   phoneNumber String?
   password    String
   firstName   String?
@@ -28,6 +28,7 @@ model User {
   likedBy          User[]     @relation("LikedUsers")
   createdTrainings Training[] @relation("CreatedTrainings")
   joinedTrainings  Training[] @relation("JoinedTrainings")
+  Group            Group[]    @relation("UserToGroup")
 }
 
 model Location {
@@ -35,7 +36,7 @@ model Location {
 
   user       User?     @relation(fields: [userId], references: [id])
   userId     String?   @unique
-  training   Training? @relation(fields: [trainingId], references: [id])
+  training   Training? @relation(fields: [trainingId], references: [id], onDelete: Cascade)
   trainingId String?   @unique
 
   name      String?
@@ -52,12 +53,13 @@ model Training {
   userId  String
   sport   Sport?  @relation(fields: [sportId], references: [id])
   sportId String?
+  group   Group?  @relation(fields: [groupId], references: [id])
+  groupId String? @unique
 
   startedAt  DateTime
   finishedAt DateTime
   mode       String
 
-  group    Group?
   location Location?
 
   rounds   Round[]
@@ -90,7 +92,7 @@ model Exercice {
 model Round {
   id String @id @default(uuid())
 
-  training   Training @relation(fields: [trainingId], references: [id])
+  training   Training @relation(fields: [trainingId], references: [id], onDelete: Cascade)
   trainingId String
   exercice   Exercice @relation(fields: [exerciceId], references: [id])
   exerciceId String
@@ -103,15 +105,18 @@ model Round {
 
 model Group {
   id String @id @default(uuid())
-
-  training   Training @relation(fields: [trainingId], references: [id], onDelete: Cascade)
-  trainingId String   @unique
-
+  
+  creator   User     @relation("UserToGroup", fields: [creatorId], references: [id])
+  creatorId String
+  
+  
   name String?
   type Type
-
+  
   messages Message[]
+  training Training?
 }
+
 
 model Message {
   id String @id @default(uuid())

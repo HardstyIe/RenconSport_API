@@ -301,6 +301,11 @@ const main = async () => {
             },
           },
           type: 'PUBLIC',
+          creator: {
+            connect: {
+              id: users[0].id,
+            },
+          },
         },
       ] as Prisma.GroupCreateInput[]
     ).map((group) =>

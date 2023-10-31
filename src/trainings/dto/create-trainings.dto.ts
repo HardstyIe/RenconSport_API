@@ -1,32 +1,60 @@
-import { Group, LocationType, Round } from '@prisma/client';
-import { IsDateString, IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { LocationType } from '@prisma/client';
+import {
+  IsArray,
+  IsDate,
+  IsNumber,
+  IsObject,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateTrainingDto {
-  @IsUUID()
-  @IsNotEmpty()
-  user: string; // Cela devrait être l'ID de l'utilisateur créant l'entraînement
+  @IsString()
+  user: string;
 
-  @IsDateString()
-  @IsNotEmpty()
+  @IsString()
+  sportId: string;
+
+  @IsDate()
   startedAt: Date;
 
-  @IsDateString()
-  @IsNotEmpty()
+  @IsDate()
   finishedAt: Date;
 
   @IsString()
-  @IsNotEmpty()
-  location: LocationType;
-
-  group: Group;
-
-  rounds: Round[];
-
-  @IsUUID()
-  @IsNotEmpty()
-  partners: string[];
-
-  @IsString()
-  @IsNotEmpty()
   mode: string;
+
+  // Location
+  @IsString()
+  locationType: LocationType;
+
+  @IsNumber()
+  locationLatitude: number;
+
+  @IsNumber()
+  locationLongitude: number;
+
+  // Rounds
+  @IsArray()
+  exerciceIds: string[];
+
+  @IsOptional()
+  @IsObject()
+  commonRound?: {
+    repetitions?: number;
+    sets?: number;
+    duration?: number;
+    weight?: number;
+  };
+
+  @IsOptional()
+  @IsArray()
+  @IsObject({ each: true })
+  specificRounds?: {
+    exerciceId: string;
+    repetitions?: number;
+    sets?: number;
+    duration?: number;
+    weight?: number;
+  }[];
 }

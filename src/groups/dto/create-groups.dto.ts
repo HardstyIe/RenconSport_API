@@ -1,15 +1,16 @@
 import { Type } from '@prisma/client';
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class CreateGroupDto {
-  @IsNotEmpty()
   @IsString()
   name: string;
 
-  @IsOptional()
+  @IsString()
   training: string;
 
-  @IsNotEmpty()
   @IsString()
   type: Type;
+
+  @IsString()
+  creatorId: string; // Ajoutez cette ligne
 }

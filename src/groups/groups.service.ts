@@ -25,6 +25,11 @@ export class GroupService {
           },
         },
         type: dto.type,
+        creator: {
+          connect: {
+            id: dto.creatorId,
+          },
+        },
       },
     });
   }
