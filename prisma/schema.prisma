@@ -1,0 +1,149 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(uuid())
+
+  email       String @unique
+  phoneNumber String?
+  password    String
+  firstName   String?
+  lastName    String?
+  biography   String?
+  birthday    DateTime?
+  isAdmin     Boolean   @default(false)
+  avatar      String?
+
+  location Location?
+
+  messages         Message[]
+  likedExercices   Exercice[]
+  likedUsers       User[]     @relation("LikedUsers")
+  likedBy          User[]     @relation("LikedUsers")
+  createdTrainings Training[] @relation("CreatedTrainings")
+  joinedTrainings  Training[] @relation("JoinedTrainings")
+  Group            Group[]    @relation("UserToGroup")
+}
+
+model Location {
+  id String @id @default(uuid())
+
+  user       User?     @relation(fields: [userId], references: [id])
+  userId     String?   @unique
+  training   Training? @relation(fields: [trainingId], references: [id], onDelete: Cascade)
+  trainingId String?   @unique
+
+  name      String?
+  address   String?
+  type      LocationType
+  latitude  Float
+  longitude Float
+}
+
+model Training {
+  id String @id @default(uuid())
+
+  user    User    @relation("CreatedTrainings", fields: [userId], references: [id])
+  userId  String
+  sport   Sport?  @relation(fields: [sportId], references: [id])
+  sportId String?
+  group   Group?  @relation(fields: [groupId], references: [id])
+  groupId String? @unique
+
+  startedAt  DateTime
+  finishedAt DateTime
+  mode       String
+
+  location Location?
+
+  rounds   Round[]
+  partners User[]  @relation("JoinedTrainings")
+}
+
+model Sport {
+  id String @id @default(uuid())
+
+  name String
+  icon String
+
+  trainings Training[]
+  exercices Exercice[]
+}
+
+model Exercice {
+  id String @id @default(uuid())
+
+  sport   Sport  @relation(fields: [sportId], references: [id])
+  sportId String
+
+  name       String
+  difficulty Difficulty
+
+  rounds Round[]
+  users  User[]
+}
+
+model Round {
+  id String @id @default(uuid())
+
+  training   Training @relation(fields: [trainingId], references: [id], onDelete: Cascade)
+  trainingId String
+  exercice   Exercice @relation(fields: [exerciceId], references: [id])
+  exerciceId String
+
+  duration    Int?
+  sets        Int
+  repetitions Int?
+  weight      Float?
+}
+
+model Group {
+  id String @id @default(uuid())
+  
+  creator   User     @relation("UserToGroup", fields: [creatorId], references: [id])
+  creatorId String
+  
+  
+  name String?
+  type Type
+  
+  messages Message[]
+  training Training?
+}
+
+
+model Message {
+  id String @id @default(uuid())
+
+  group    Group  @relation(fields: [groupId], references: [id])
+  groupId  String
+  sender   User   @relation(fields: [senderId], references: [id])
+  senderId String
+
+  content String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum Type {
+  PUBLIC
+  PRIVATE
+}
+
+enum LocationType {
+  INDOOR
+  OUTDOOR
+}
