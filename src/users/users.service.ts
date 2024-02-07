@@ -21,7 +21,6 @@ export class UsersServices {
     if (!user) {
       throw new NotFoundException(`No user found with the ID ${id}.`);
     }
-
     return user;
   }
 

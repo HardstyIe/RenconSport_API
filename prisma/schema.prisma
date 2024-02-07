@@ -4,13 +4,13 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DB_URL")
 }
 
 model User {
   id String @id @default(uuid())
 
-  email       String @unique
+  email       String    @unique
   phoneNumber String?
   password    String
   firstName   String?
@@ -28,7 +28,8 @@ model User {
   likedBy          User[]     @relation("LikedUsers")
   createdTrainings Training[] @relation("CreatedTrainings")
   joinedTrainings  Training[] @relation("JoinedTrainings")
-  Group            Group[]    @relation("UserToGroup")
+  createdGroups    Group[]    @relation("CreatedGroups")
+  joinedGroups     Group[]    @relation("JoinedGroups")
 }
 
 model Location {
@@ -105,18 +106,17 @@ model Round {
 
 model Group {
   id String @id @default(uuid())
-  
-  creator   User     @relation("UserToGroup", fields: [creatorId], references: [id])
-  creatorId String
-  
-  
+
+  owner   User   @relation("CreatedGroups", fields: [ownerId], references: [id])
+  ownerId String
+
   name String?
   type Type
-  
+
+  members  User[]    @relation("JoinedGroups")
   messages Message[]
   training Training?
 }
-
 
 model Message {
   id String @id @default(uuid())
