@@ -122,7 +122,7 @@ export class TrainingsService {
           group: {
             create: {
               type: 'PUBLIC',
-              creator: {
+              owner: {
                 connect: {
                   id: dto.user,
                 },

@@ -33,22 +33,44 @@
 # CMD npm start
 
 
-FROM node:alpine
+# FROM node:20-alpine
 
-# RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+# # RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
-WORKDIR /home/node/app
+# WORKDIR /home/node/app
 
-COPY package*.json ./
+# COPY package*.json ./
 
-USER node
+# USER node
 
-RUN npm install
+# RUN npm install
 
-# RUN npm install -g @nestjs/cli
+# # RUN npm install -g @nestjs/cli
 
+# COPY --chown=node:node . .
+
+# EXPOSE 3000
+
+# CMD [ "npm","run" ,"start:dev" ]
+
+
+FROM node:20-alpine as build
+RUN echo "aeryle la salope"
+WORKDIR /app
+COPY --chown=node:node package.json package-lock.json ./
 COPY --chown=node:node . .
-
+RUN npm ci
+RUN npm run build
+ 
+FROM node:20-alpine
+RUN echo "aeryle la salope 2"
+RUN apt-get update && apt-get install curl -y
+WORKDIR /app
+COPY --chown=node:node --from=build /app/package.json /app/package-lock.json ./
+COPY --chown=node:node --from=build /app/node_modules ./node_modules
+COPY --chown=node:node --from=build /app/dist ./dist
+RUN npm prune --production
+USER node
 EXPOSE 3000
-
-CMD [ "npm","run" ,"start:dev" ]
+HEALTHCHECK --interval=15s --timeout=3s --start-period=15s CMD curl -f http://localhost:3000/api/health
+CMD ["node", "dist/src/main.js"]

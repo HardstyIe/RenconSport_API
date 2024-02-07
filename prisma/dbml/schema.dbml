@@ -1,0 +1,142 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table User {
+  id String [pk]
+  email String [unique, not null]
+  phoneNumber String
+  password String [not null]
+  firstName String
+  lastName String
+  biography String
+  birthday DateTime
+  isAdmin Boolean [not null, default: false]
+  avatar String
+  location Location
+  messages Message [not null]
+  likedExercices Exercice [not null]
+  likedUsers User [not null]
+  likedBy User [not null]
+  createdTrainings Training [not null]
+  joinedTrainings Training [not null]
+  Group Group [not null]
+}
+
+Table Location {
+  id String [pk]
+  user User
+  userId String [unique]
+  training Training
+  trainingId String [unique]
+  name String
+  address String
+  type LocationType [not null]
+  latitude Float [not null]
+  longitude Float [not null]
+}
+
+Table Training {
+  id String [pk]
+  user User [not null]
+  userId String [not null]
+  sport Sport
+  sportId String
+  group Group
+  groupId String [unique]
+  startedAt DateTime [not null]
+  finishedAt DateTime [not null]
+  mode String [not null]
+  location Location
+  rounds Round [not null]
+  partners User [not null]
+}
+
+Table Sport {
+  id String [pk]
+  name String [not null]
+  icon String [not null]
+  trainings Training [not null]
+  exercices Exercice [not null]
+}
+
+Table Exercice {
+  id String [pk]
+  sport Sport [not null]
+  sportId String [not null]
+  name String [not null]
+  difficulty Difficulty [not null]
+  rounds Round [not null]
+  users User [not null]
+}
+
+Table Round {
+  id String [pk]
+  training Training [not null]
+  trainingId String [not null]
+  exercice Exercice [not null]
+  exerciceId String [not null]
+  duration Int
+  sets Int [not null]
+  repetitions Int
+  weight Float
+}
+
+Table Group {
+  id String [pk]
+  creator User [not null]
+  creatorId String [not null]
+  name String
+  type Type [not null]
+  messages Message [not null]
+  training Training
+}
+
+Table Message {
+  id String [pk]
+  group Group [not null]
+  groupId String [not null]
+  sender User [not null]
+  senderId String [not null]
+  content String [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+Enum Type {
+  PUBLIC
+  PRIVATE
+}
+
+Enum LocationType {
+  INDOOR
+  OUTDOOR
+}
+
+Ref: Location.userId - User.id
+
+Ref: Location.trainingId - Training.id [delete: Cascade]
+
+Ref: Training.userId > User.id
+
+Ref: Training.sportId > Sport.id
+
+Ref: Training.groupId - Group.id
+
+Ref: Exercice.sportId > Sport.id
+
+Ref: Round.trainingId > Training.id [delete: Cascade]
+
+Ref: Round.exerciceId > Exercice.id
+
+Ref: Group.creatorId > User.id
+
+Ref: Message.groupId > Group.id
+
+Ref: Message.senderId > User.id

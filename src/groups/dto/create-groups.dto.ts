@@ -12,5 +12,5 @@ export class CreateGroupDto {
   type: Type;
 
   @IsString()
-  creatorId: string; // Ajoutez cette ligne
+  ownerId: string; // Ajoutez cette ligne
 }

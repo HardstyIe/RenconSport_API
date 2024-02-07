@@ -16,8 +16,7 @@ services:
     restart: unless-stopped
 
   prisma-postgres-api:
-    image: nodejs:alpine
-    stdin_open: true
+    # image: node:20-alpine
     build:
       context: .
       dockerfile: Dockerfile
@@ -25,16 +24,15 @@ services:
     depends_on:
       - postgres
     ports:
-      - '3000:3000'
+      - 3000:3000
     restart: unless-stopped
-    volumes:
-      - .:/home/node/app
-      - node_modules:/home/node/app/node_modules
+    # volumes:
+    #   - .:/home/node/app
+    #   - node_modules:/home/node/app/node_modules
     environment:
       DB_HOSTNAME: postgres
-    # command: ./wait-for.sh postgres:5432
 
 volumes:
   postgres-data:
   pgadmin-data:
-  node_modules:
+  # node_modules:

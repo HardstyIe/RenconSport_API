@@ -301,7 +301,7 @@ const main = async () => {
             },
           },
           type: 'PUBLIC',
-          creator: {
+          owner: {
             connect: {
               id: users[0].id,
             },
